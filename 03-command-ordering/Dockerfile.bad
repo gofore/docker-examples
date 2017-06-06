@@ -1,0 +1,19 @@
+FROM ubuntu:16.10
+
+# changing port resets all fs layers below
+ENV PORT 8081
+
+# changing content of files resets all fs layers below
+COPY static/ /src
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  python3 \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+EXPOSE $PORT
+
+# defines an executable command in shell form
+ENTRYPOINT python3 -m http.server $PORT

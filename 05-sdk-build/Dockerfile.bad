@@ -1,0 +1,13 @@
+FROM maven:3.5-jdk-8
+
+RUN mkdir -p /src
+
+COPY . /src
+
+WORKDIR /src
+
+RUN mvn package
+
+EXPOSE 9000
+
+ENTRYPOINT [ "java", "-Dserver.port=9000", "-jar", "target/demo-0.0.1-SNAPSHOT.jar" ]

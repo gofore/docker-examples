@@ -1,0 +1,12 @@
+FROM ubuntu:16.10
+
+# creates only single fs layer and forces the update to
+# run every time a new package is added to the list, also
+# cleans up package metadata
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  git \
+  python \
+  && rm -rf /var/lib/apt/lists/*
+
+CMD [ "python", "--version" ]

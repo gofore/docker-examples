@@ -1,0 +1,4 @@
+# pull the latest image on build
+FROM python:latest
+
+CMD [ "python", "--version" ]

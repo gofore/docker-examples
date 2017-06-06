@@ -1,0 +1,14 @@
+FROM ubuntu:16.10
+
+# update will be cached independently
+# and will create an extra fs layer
+RUN apt-get update
+
+# unpredictable images
+RUN apt-get upgrade -y
+
+# every RUN will create an extra fs layer
+RUN apt-get install -y git
+RUN apt-get install -y python
+
+CMD [ "python", "--version" ]

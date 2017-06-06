@@ -1,0 +1,40 @@
+version: '3'
+
+# defines the list of container services
+services:
+  application:
+    build: ./application # build image from local dockerfile
+    networks: # bind the container in two networks
+      - frontend
+      - backend
+    depends_on: # depend on applicationdb service
+      - applicationdb
+    environment: # set up environment variables for the container
+      PGUSER: myapp
+      PGPASSWORD: myapp_passwd
+      PGHOST: applicationdb
+    command: myapp # append command to image ENTRYPOINT
+
+  applicationdb:
+    image: postgres:9.6 # user pre-existing image
+    ports: # expose database also to host
+      - 5453:5432
+    networks: # bind the container in backend network
+      - backend
+    volumes: # store data in applicationdata volume
+      - applicationdata:/var/lib/postgresql/data
+    environment: # set up environment variables for the container
+      POSTGRES_USER: myapp
+      POSTGRES_PASSWORD: myapp_passwd
+
+# create two networks with bridge driver
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+# create volume with local driver
+volumes:
+  applicationdata:
+    driver: local
