@@ -5,7 +5,7 @@ Installation of additional packages for the operating
 system can slow down the image build process radically.
 
 There are also pitfalls how the package updates affect
-the image predicatbility and file system layers.
+the image predictability and file system layers.
 
 
 Build images with
